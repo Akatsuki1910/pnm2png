@@ -7,6 +7,7 @@ const renderer = PIXI.autoDetectRenderer({
   resolution: 1,
   antialias: true,
   backgroundColor: 0xffffff,
+  preserveDrawingBuffer: true,
 })
 
 ;(document.getElementById('canvas') as HTMLDivElement).appendChild(
@@ -17,7 +18,7 @@ function createRect(x: number, y: number, color: number) {
   const square = new PIXI.Graphics()
 
   square.beginFill(color)
-  square.drawRect(x * 2, y * 2, 2, 2)
+  square.drawRect(x, y, 1, 1)
   square.endFill()
 
   return square
@@ -61,6 +62,7 @@ function pbm(dArr: number[]) {
       )
     }
   }
+  renderer.render(stage)
 }
 
 function pgm(dArr: number[]) {
@@ -72,6 +74,7 @@ function pgm(dArr: number[]) {
       )
     }
   }
+  renderer.render(stage)
 }
 
 function ppm(dArr: number[]) {
@@ -84,6 +87,7 @@ function ppm(dArr: number[]) {
       stage.addChild(createRect(l, i, PIXI.utils.rgb2hex([r, g, b])))
     }
   }
+  renderer.render(stage)
 }
 
 ;(document.getElementById('file') as HTMLInputElement).addEventListener(
@@ -94,15 +98,24 @@ function ppm(dArr: number[]) {
     fileReader.onload = () => {
       stage.removeChildren()
       pnm((fileReader.result as string).split('\n'))
+
+      const imgUrl = renderer.view.toDataURL('image/png')
+
+      const img = document.getElementById('img') as HTMLImageElement
+      const a = document.getElementById('a') as HTMLAnchorElement
+      img.src = imgUrl
+      a.href = imgUrl
+
+      console.log('complite')
     }
     fileReader.readAsText(file)
   },
 )
 
-function animation() {
-  renderer.render(stage)
+// function animation() {
+//   renderer.render(stage)
 
-  requestAnimationFrame(animation)
-}
+//   requestAnimationFrame(animation)
+// }
 
-animation()
+// animation()

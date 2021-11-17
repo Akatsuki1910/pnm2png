@@ -2,7 +2,6 @@
   "name": "pnm2png",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "parcel build index.html --public-url ./",
     "dev": "parcel src/index.html",
