@@ -28,7 +28,7 @@ let p, w, h, c
 function pnm(arr: string[]) {
   p = arr[0]
   ;[w, h] = arr[1].split(' ').map(Number)
-  renderer.resize(w * 2, h * 2)
+  renderer.resize(w, h)
   arr.splice(0, 2)
 
   if (p !== 'P1') {
